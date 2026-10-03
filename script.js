@@ -1,44 +1,36 @@
-// تشفير النص إلى Base64
-function encryptText() {
-    let input = document.getElementById('inputText').value;
-    try {
-        let encoded = btoa(encodeURIComponent(input));
-        document.getElementById('outputText').value = encoded;
-    } catch (e) {
-        document.getElementById('outputText').value = "خطأ في عملية التشفير!";
-    }
+function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.sidebar li').forEach(el => el.classList.remove('active'));
+    
+    document.getElementById(tabId + '-tab').style.display = 'block';
+    event.currentTarget.classList.add('active');
 }
 
-// فك تشفير Base64
-function decryptText() {
-    let input = document.getElementById('inputText').value;
-    try {
-        let decoded = decodeURIComponent(atob(input));
-        document.getElementById('outputText').value = decoded;
-    } catch (e) {
-        document.getElementById('outputText').value = "النص غير صالح أو ليس بتشفير Base64 صحيح!";
-    }
+// محاكاة طلب الذكاء الاصطناعي لكتابة السكربتات
+function generateScript() {
+    let prompt = document.getElementById('aiPrompt').value;
+    if(!prompt) return;
+    document.getElementById('aiResult').innerText = "كريستل AI يكتب السكربت الآن...\n\n// سكربت تم توليده بناءً على طلبك:\nconsole.log('Crystal AI Script Generated for: " + prompt + "');";
 }
 
-// محاكاة حماية/تلغيم الكود (تشفير بسيط عبر تحويل الحروف إلى قيم سداسية عشرية Hex)
-function obfuscateCode() {
-    let input = document.getElementById('inputText').value;
-    if (!input) return;
-    
-    let obfuscated = "eval(function(p,a,c,k,e,d){...}(this," + input.length + ",..." + 
-                     btoa(input) + "));";
-    
-    // طريقة بديلة ومفيدة لتلغيم النصوص أو جعلها غير مقروءة للبشر عبر Hex
-    let hexResult = "";
-    for (let i = 0; i < input.length; i++) {
-        hexResult += "\\x" + input.charCodeAt(i).toString(16);
-    }
-    
-    document.getElementById('outputText').value = "/* Obfuscated Hex */\n" + hexResult;
+// محاكاة تلغيم الكود
+function obfuscatePayload() {
+    let code = document.getElementById('sourceCode').value;
+    if(!code) return;
+    let encoded = btoa(code);
+    document.getElementById('obfuscatedResult').value = "/* Crystal Obfuscator */\neval(atob('" + encoded + "'));";
 }
 
-// مسح الحقول
-function clearText() {
-    document.getElementById('inputText').value = "";
-    document.getElementById('outputText').value = "";
+// محاكاة فحص الملف
+function scanFile() {
+    let fileInput = document.getElementById('scanInput');
+    if(fileInput.files.length === 0) {
+        alert("الرجاء اختيار ملف أولاً!");
+        return;
+    }
+    let fileName = fileInput.files[0].name;
+    document.getElementById('scanResult').innerText = "جاري فحص الملف: " + fileName + "\n[+] الحالة: نظيف وآمن (Crystal Security Scanner)";
 }
+
+function encryptFile() { alert("تم تشفير الملف بنجاح عبر نظام كريستل!"); }
+function decryptFile() { alert("تم فك تشفير الملف بنجاح!"); }
