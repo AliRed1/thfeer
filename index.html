@@ -3,28 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أداة التشفير وفك التشفير</title>
+    <title>منصة كريستل - Crystal Suite</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>أداة التشفير وفك التشفير</h1>
-        
-        <div class="form-group">
-            <label for="inputText">النص أو الكود:</label>
-            <textarea id="inputText" placeholder="اكتب النص هنا..."></textarea>
+    <div class="sidebar">
+        <h2>💎 Crystal</h2>
+        <ul>
+            <li class="active" onclick="switchTab('ai')">مساعد الذكاء الاصطناعي</li>
+            <li onclick="switchTab('encrypt')">تشفير / فك تشفير ملفات</li>
+            <li onclick="switchTab('obfuscate')">تلغيم وفك تلغيم</li>
+            <li onclick="switchTab('scan')">فحص الملفات</li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <!-- قسم الذكاء الاصطناعي -->
+        <div id="ai-tab" class="tab-content">
+            <h2>مساعد كريستل الذكي لتوليد السكربتات</h2>
+            <textarea id="aiPrompt" placeholder="اطلب من كريستل كتابة أي سكربت أو أداة برمجية..."></textarea>
+            <button onclick="generateScript()">توليد السكربت بالذكاء الاصطناعي</button>
+            <pre id="aiResult">النتيجة ستظهر هنا...</pre>
         </div>
 
-        <div class="buttons">
-            <button onclick="encryptText()">تشفير (Base64)</button>
-            <button onclick="decryptText()">فك التشفير</button>
-            <button onclick="obfuscateCode()">حماية/تلغيم الكود (Obfuscate)</button>
-            <button onclick="clearText()">مسح</button>
+        <!-- قسم التشفير -->
+        <div id="encrypt-tab" class="tab-content" style="display:none;">
+            <h2>تشفير وفك تشفير الملفات والنصوص</h2>
+            <input type="file" id="fileInput">
+            <div class="buttons-group">
+                <button onclick="encryptFile()">تشفير الملف</button>
+                <button onclick="decryptFile()">فك تشفير الملف</button>
+            </div>
+            <a id="downloadLink" style="display:none; margin-top:10px; color:#58a6ff;">تحميل الملف الناتج</a>
         </div>
 
-        <div class="form-group">
-            <label for="outputText">النتيجة:</label>
-            <textarea id="outputText" readonly placeholder="ستظهر النتيجة هنا..."></textarea>
+        <!-- قسم التلغيم والتمويه -->
+        <div id="obfuscate-tab" class="tab-content" style="display:none;">
+            <h2>تلغيم وحماية السكربتات (Obfuscation)</h2>
+            <textarea id="sourceCode" placeholder="ضع الكود البرمجي هنا لتلغيمه أو حمايته..."></textarea>
+            <button onclick="obfuscatePayload()">تنفيذ التلغيم / التمويه</button>
+            <textarea id="obfuscatedResult" readonly placeholder="الكود بعد التلغيم..."></textarea>
+        </div>
+
+        <!-- قسم الفحص -->
+        <div id="scan-tab" class="tab-content" style="display:none;">
+            <h2>فحص الملفات والسكربتات</h2>
+            <input type="file" id="scanInput">
+            <button onclick="scanFile()">فحص شامل للملف</button>
+            <pre id="scanResult">نتيجة الفحص...</pre>
         </div>
     </div>
 
