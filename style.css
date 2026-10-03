@@ -1,69 +1,94 @@
 body {
-    font-family: Tahoma, sans-serif;
-    background-color: #0d1117;
-    color: #c9d1d9;
     margin: 0;
-    padding: 20px;
+    font-family: Tahoma, sans-serif;
+    background-color: #0b0f19;
+    color: #e6edf3;
     display: flex;
-    justify-content: center;
+    height: 100vh;
 }
 
-.container {
-    width: 100%;
-    max-width: 600px;
-    background: #161b22;
+.sidebar {
+    width: 250px;
+    background: #111827;
+    border-left: 1px solid #1f2937;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
-h1 {
+.sidebar h2 {
+    color: #38bdf8;
     text-align: center;
-    color: #58a6ff;
-    font-size: 22px;
+    margin-bottom: 30px;
 }
 
-.form-group {
-    margin-bottom: 15px;
+.sidebar ul {
+    list-style: none;
+    padding: 0;
 }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+.sidebar li {
+    padding: 12px;
+    margin-bottom: 8px;
+    background: #1f2937;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.sidebar li:hover, .sidebar li.active {
+    background: #0284c7;
+    color: #fff;
+}
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.tab-content {
+    background: #111827;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
 }
 
 textarea {
     width: 100%;
-    height: 120px;
-    background: #0d1117;
-    color: #c9d1d9;
-    border: 1px solid #30363d;
+    height: 150px;
+    background: #030712;
+    color: #e6edf3;
+    border: 1px solid #374151;
     border-radius: 6px;
     padding: 10px;
-    resize: vertical;
+    margin-top: 10px;
+    margin-bottom: 15px;
     box-sizing: border-box;
 }
 
-.buttons {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 15px;
-}
-
 button {
-    flex: 1;
-    background: #238636;
+    background: #0284c7;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 10px 20px;
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
-    transition: 0.2s;
 }
 
 button:hover {
-    background: #2ea043;
+    background: #0369a1;
+}
+
+input[type="file"] {
+    margin-bottom: 15px;
+    display: block;
+}
+
+pre {
+    background: #030712;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #374151;
+    overflow-x: auto;
 }
