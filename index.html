@@ -3,318 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crystal Suite - لوحة التحكم الاحترافية</title>
-    <!-- استيراد خط كاييرو الأنيق -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <!-- مكتبة الأيقونات FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-primary: #07090e;
-            --bg-sidebar: #0f131d;
-            --card-bg: #131927;
-            --accent-cyan: #00f2fe;
-            --accent-blue: #4facfe;
-            --text-main: #ffffff;
-            --text-muted: #94a3b8;
-            --border-color: rgba(0, 242, 254, 0.2);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-main);
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* القائمة الجانبية - Sidebar */
-        .sidebar {
-            width: 300px;
-            background-color: var(--bg-sidebar);
-            border-left: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            padding: 25px 20px;
-            overflow-y: auto;
-            flex-shrink: 0;
-        }
-
-        .sidebar h2 {
-            font-size: 22px;
-            font-weight: 900;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .sidebar ul li {
-            padding: 12px 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-muted);
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .sidebar ul li:hover {
-            background: rgba(0, 242, 254, 0.08);
-            color: var(--accent-cyan);
-        }
-
-        .sidebar ul li.active {
-            background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(79, 172, 254, 0.15));
-            color: var(--accent-cyan);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.1);
-        }
-
-        /* محتوى الصفحة الرئيسي */
-        .main-content {
-            flex: 1;
-            padding: 40px;
-            overflow-y: auto;
-            background: radial-gradient(circle at top left, rgba(79, 172, 254, 0.05) 0%, transparent 60%);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 30px;
-            margin-top: 20px;
-        }
-
-        .card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-            color: var(--accent-cyan);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            padding: 10px 24px;
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-            color: #07090e;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn:hover {
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.6);
-            transform: translateY(-2px);
-        }
-
-        /* تخصيص حقول المدخلات والشاشات داخل الأدوات */
-        textarea, input {
-            width: 100%;
-            background: rgba(7, 9, 14, 0.6);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px;
-            color: #fff;
-            margin-bottom: 15px;
-            font-size: 14px;
-            outline: none;
-        }
-
-        textarea:focus, input:focus {
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
-        }
-    </style>
+    <title>منصة كريستل الشاملة - Crystal Suite Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body>
-
-    <!-- القائمة الجانبية (تم تفعيل الضغط بشكل كامل وتأمين الـ Click Listeners) -->
     <div class="sidebar">
         <h2>💎 Crystal Suite</h2>
-        <ul id="nav-list">
-            <li class="active" data-target="ai"><i class="fa-solid fa-robot"></i> مساعد كريستال والذكاء (AI)</li>
-            <li data-target="debugger"><i class="fa-solid fa-wrench"></i> مصحح الأكواد (Debugger)</li>
-            <li data-target="encrypt"><i class="fa-solid fa-lock"></i> تشفير وفك تشفير الملفات</li>
-            <li data-target="obfuscate"><i class="fa-solid fa-shield-halved"></i> تلغيم وحماية الأكواد</li>
-            <li data-target="scan"><i class="fa-solid fa-magnifying-glass"></i> فحص الملفات والروابط</li>
-            <li data-target="converter"><i class="fa-solid fa-rotate"></i> محول صيغ الملفات والأدوات</li>
-            <li data-target="notes"><i class="fa-solid fa-cloud"></i> السحابة المؤقتة للملاحظات</li>
-            <li data-target="palette"><i class="fa-solid fa-palette"></i> استوديو الألوان والتصميم</li>
-            <li data-target="apitester"><i class="fa-solid fa-bolt"></i> فاحص طلبات API</li>
-            <li data-target="ideas"><i class="fa-solid fa-lightbulb"></i> مولد الأفكار والتريندات</li>
+        <ul>
+            <li class="active" onclick="switchTab('ai')">🤖 مساعد كريستل والذكي (AI)</li>
+            <li onclick="switchTab('debugger')">🛠️ مصحح الأكواد (Debugger)</li>
+            <li onclick="switchTab('encrypt')">🔐 تشفير وفك تشفير الملفات</li>
+            <li onclick="switchTab('obfuscate')">🛡️ تلغيم وحماية الأكواد</li>
+            <li onclick="switchTab('scan')">🔍 فحص الملفات والروابط</li>
+            <li onclick="switchTab('converter')">🔄 محول صيغ الملفات والأدوات</li>
+            <li onclick="switchTab('notes')">☁️ السحابة المؤقتة للملاحظات</li>
+            <li onclick="switchTab('palette')">🎨 استوديو الألوان والتصميم</li>
+            <li onclick="switchTab('apitester')">⚡ فاحص طلبات API</li>
+            <li onclick="switchTab('ideas')">💡 مولد الأفكار والتريندات</li>
         </ul>
     </div>
 
-    <!-- المحتوى التفاعلي -->
     <div class="main-content">
-        
         <!-- 1. مساعد الذكاء الاصطناعي -->
-        <div id="ai" class="tab-content active">
-            <div class="card">
-                <h3><i class="fa-solid fa-robot"></i> مساعد كريستال والذكاء الاصطناعي (AI)</h3>
-                <p>مساعدك الذكي لتحليل الأكواد، كتابة السكريبتات، والإجابة على استفساراتك البرمجية فوراً.</p>
-                <textarea rows="4" placeholder="اكتب سؤالك أو اطلب كوداً هنا..."></textarea>
-                <button class="btn">إرسال للمساعد</button>
+        <div id="ai-tab" class="tab-content">
+            <h2>مساعد كريستل الذكي لتوليد السكربتات</h2>
+            <label>اختر لغة البرمجة المطلوبة:</label>
+            <select id="langSelect">
+                <option value="js">JavaScript</option>
+                <option value="py">Python</option>
+                <option value="lua">Lua (FiveM)</option>
+                <option value="bash">Bash</option>
+                <option value="html">HTML / CSS</option>
+            </select>
+            <textarea id="aiPrompt" placeholder="اطلب أي سكربت، فكرة موقع، أو أداة برمجية..."></textarea>
+            <div class="buttons-group">
+                <button onclick="generateScript()">توليد السكربت بالذكاء الاصطناعي</button>
+                <button onclick="downloadCodeFile()" class="download-btn">تحميل الناتج كملف 💾</button>
             </div>
+            <pre id="aiResult">النتيجة ستظهر هنا...</pre>
         </div>
 
         <!-- 2. مصحح الأكواد -->
-        <div id="debugger" class="tab-content">
-            <div class="card">
-                <h3><i class="fa-solid fa-wrench"></i> مصحح الأكواد (Debugger)</h3>
-                <p>افحص أخطاء سكريبتاتك واكتشف الثغرات البرمجية وحلها تلقائياً.</p>
-                <textarea rows="4" placeholder="الصق الكود هنا لفحصه وتصحيحه..."></textarea>
-                <button class="btn">فحص الكود الآن</button>
-            </div>
+        <div id="debugger-tab" class="tab-content" style="display:none;">
+            <h2>مصحح الأكواد والثغرات الآلي (Bug Finder & Fixer)</h2>
+            <textarea id="debugInput" placeholder="الصق الكود الذي يحتوي على خطأ هنا..."></textarea>
+            <button onclick="fixCode()">فحص وإصلاح الأكواد تلقائياً</button>
+            <pre id="debugResult">نتيجة التصحيح ستظهر هنا...</pre>
         </div>
 
-        <!-- 3. التشفير -->
-        <div id="encrypt" class="tab-content">
-            <div class="card">
-                <h3><i class="fa-solid fa-lock"></i> تشفير وفك تشفير الملفات (AES-256)</h3>
-                <p>احمِ ملفاتك وسكريبتاتك عبر خوارزميات التشفير المتقدمة.</p>
-                <input type="password" placeholder="أدخل مفتاح التشفير (Secret Key)">
-                <button class="btn">تشفير الملف</button>
+        <!-- 3. التشفير الحقيقي -->
+        <div id="encrypt-tab" class="tab-content" style="display:none;">
+            <h2>تشفير وفك تشفير الملفات (AES-256)</h2>
+            <input type="text" id="secretKey" placeholder="أدخل مفتاح التشفير (كلمة السر)..." style="width:100%; padding:10px; margin-bottom:15px; background:#030712; color:#fff; border:1px solid #374151; border-radius:6px; box-sizing:border-box;">
+            <div class="drop-zone" id="dropZone">اسحب الملف وأفلته هنا أو اضغط للاختيار</div>
+            <input type="file" id="fileInput" style="display:none;">
+            <div class="buttons-group" style="margin-top:15px;">
+                <button onclick="encryptFile()">تشفير الملف بالكامل</button>
+                <button onclick="decryptFile()">فك تشفير الملف</button>
             </div>
+            <a id="downloadLink" style="display:none; margin-top:10px; color:#38bdf8;">تحميل الملف الناتج</a>
         </div>
 
-        <!-- 4. تلغيم وحماية الأكواد -->
-        <div id="obfuscate" class="tab-content">
-            <div class="card">
-                <h3><i class="fa-solid fa-shield-halved"></i> تلغيم وحماية الأكواد (Obfuscation)</h3>
-                <p>اصعب الأكواد على العبث والسرقة عبر تقنيات الحماية والـ VM.</p>
-                <textarea rows="4" placeholder="الصق الكود لعمل تلغيم وحماية له..."></textarea>
-                <button class="btn">تفعيل التلغيم والحماية</button>
+        <!-- 4. التلغيم والتمويه -->
+        <div id="obfuscate-tab" class="tab-content" style="display:none;">
+            <h2>تلغيم وحماية الأكواد (Obfuscation Studio)</h2>
+            <textarea id="sourceCode" placeholder="ضع الكود المراد تلغيمه..."></textarea>
+            <div class="buttons-group">
+                <button onclick="obfuscatePayload('base64')">تشفير Base64 متعدد الطبقات</button>
+                <button onclick="obfuscatePayload('hex')">تشفير Hex مع eval</button>
             </div>
+            <textarea id="obfuscatedResult" readonly placeholder="الكود بعد التلغيم..."></textarea>
         </div>
 
-        <!-- 5. الفحص -->
-        <div id="scan" class="tab-content">
-            <div class="card">
-                <h3><i class="fa-solid fa-magnifying-glass"></i> فحص الملفات والروابط</h3>
-                <p>تأكد من خلو الملفات والروابط من الأكواد الخبيثة.</p>
-                <input type="text" placeholder="أدخل الرابط أو مسار الملف للفحص...">
-                <button class="btn">بدء الفحص الأمني</button>
-            </div>
+        <!-- 5. الفحص الأمني -->
+        <div id="scan-tab" class="tab-content" style="display:none;">
+            <h2>فحص الملفات والروابط أمنياً</h2>
+            <input type="text" id="urlInput" placeholder="أدخل رابطاً لفحصه (مثال: https://site.com)..." style="width:100%; padding:10px; margin-bottom:15px; background:#030712; color:#fff; border:1px solid #374151; border-radius:6px; box-sizing:border-box;">
+            <button onclick="scanUrl()">فحص الرابط</button>
+            <pre id="scanResult" style="margin-top:15px;">تقرير الفحص سيظهر هنا...</pre>
         </div>
 
-        <!-- 6. المحول -->
-        <div id="converter" class="tab-content">
-            <div class="card">
-                <h3><i class="fa-solid fa-rotate"></i> محول صيغ الملفات والأدوات</h3>
-                <p>حول بين مختلف صيغ الملفات والسكريبتات بكل سهولة وسرعة فائقة.</p>
-                <button class="btn">اختر ملف للتحويل</button>
+        <!-- 6. محول الأدوات والصيغ -->
+        <div id="converter-tab" class="tab-content" style="display:none;">
+            <h2>محول النصوص والأدوات البرمجية</h2>
+            <textarea id="convertInput" placeholder="أدخل نصاً لتحويله (Base64 / URL Encode / JSON Format)..."></textarea>
+            <div class="buttons-group">
+                <button onclick="convertText('b64encode')">ترميز Base64</button>
+                <button onclick="convertText('b64decode')">فك ترميز Base64</button>
+                <button onclick="convertText('urlencode')">URL Encode</button>
             </div>
+            <textarea id="convertResult" readonly placeholder="النتيجة المحولة..."></textarea>
         </div>
 
-        <!-- 7. الملاحظات -->
-        <div id="notes" class="tab-content">
-            <div class="card">
-                <h3><i class="fa-solid fa-cloud"></i> السحابة المؤقتة للملاحظات</h3>
-                <p>احفظ نصوصك وأكوادك بشكل مؤقت وآمن ومتاح للوصول السريع.</p>
-                <textarea rows="4" placeholder="اكتب ملاحظتك السحابية هنا..."></textarea>
-                <button class="btn">حفظ في السحابة</button>
-            </div>
+        <!-- 7. السحابة المؤقتة للملاحظات -->
+        <div id="notes-tab" class="tab-content" style="display:none;">
+            <h2>الحافظة والسحابة المؤقتة (Cloud Clipboard)</h2>
+            <textarea id="cloudNote" placeholder="اكتب ملاحظتك أو كودك السريع هنا لنقله بين أجهزتك..."></textarea>
+            <button onclick="saveNoteLocally()">حفظ مؤقتاً على المتصفح</button>
+            <pre id="noteResult" style="margin-top:15px;"></pre>
         </div>
 
-        <!-- 8. الألوان -->
-        <div id="palette" class="tab-content">
-            <div class="card">
-                <h3><i class="fa-solid fa-palette"></i> استوديو الألوان والتصميم</h3>
-                <p>استعرض ونسق الألوان والتدرجات لتصاميم واجهات احترافية.</p>
-                <button class="btn">توليد لوحة ألوان</button>
-            </div>
+        <!-- 8. استوديو الألوان -->
+        <div id="palette-tab" class="tab-content" style="display:none;">
+            <h2>استوديو الألوان وتدرجاتها (Color Studio)</h2>
+            <p>اختر لوناً لرؤية كوده وتدرجاته البرمجية:</p>
+            <input type="color" id="colorPicker" value="#0284c7" onchange="updateColorInfo()" style="width:100px; height:40px; cursor:pointer; background:none; border:none;">
+            <pre id="colorCodeResult" style="margin-top:15px;">HEX: #0284c7\nRGB: rgb(2, 132, 199)</pre>
         </div>
 
         <!-- 9. فاحص API -->
-        <div id="apitester" class="tab-content">
-            <div class="card">
-                <h3><i class="fa-solid fa-bolt"></i> فاحص طلبات API</h3>
-                <p>أرسل طلبات HTTP واختبر استجابات الـ APIs والروابط البرمجية.</p>
-                <input type="text" placeholder="https://api.example.com/v1/endpoint">
-                <button class="btn">إرسال الطلب</button>
-            </div>
+        <div id="apitester-tab" class="tab-content" style="display:none;">
+            <h2>فاحص ومختبر روابط الـ API الخفيفة</h2>
+            <input type="text" id="apiUrl" placeholder="أدخل رابط API (مثال: https://api.ipify.org?format=json)" style="width:100%; padding:10px; margin-bottom:15px; background:#030712; color:#fff; border:1px solid #374151; border-radius:6px; box-sizing:border-box;">
+            <button onclick="testApiRequest()">إرسال طلب GET</button>
+            <pre id="apiResult" style="margin-top:15px;">استجابة الـ API ستظهر هنا...</pre>
         </div>
 
-        <!-- 10. الأفكار -->
-        <div id="ideas" class="tab-content">
-            <div class="card">
-                <h3><i class="fa-solid fa-lightbulb"></i> مولد الأفكار والتريندات</h3>
-                <p>احصل على أفكار مبتكرة للمشاريع والسكربتات البرمجية الرائجة.</p>
-                <button class="btn">ولّد فكرة جديدة</button>
-            </div>
+        <!-- 10. مولد الأفكار والتريندات -->
+        <div id="ideas-tab" class="tab-content" style="display:none;">
+            <h2>مولد أفكار المشاريع والسكربتات الذكي</h2>
+            <select id="ideaCategory" style="margin-bottom:15px;">
+                <option value="fivem">سكربتات FiveM متميزة</option>
+                <option value="bot">بوتات ديسكورد تفاعلية</option>
+                <option value="web">مواقع وتطبيقات ويب ذكية</option>
+            </select>
+            <button onclick="generateRandomIdea()">توليد فكرة مشروع إبداعية 💡</button>
+            <pre id="ideaResult" style="margin-top:15px;">اضغط الزر لتوليد فكرة مشروعك القادم...</pre>
         </div>
-
     </div>
 
-    <!-- كود جافاسكريبت المحدث والآمن لتفعيل النقر الفوري -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const navItems = document.querySelectorAll("#nav-list li");
-            const tabs = document.querySelectorAll(".tab-content");
-
-            navItems.forEach(item => {
-                item.addEventListener("click", () => {
-                    // إزالة الفئة النشطة من كل العناصر
-                    navItems.forEach(nav => nav.classList.remove("active"));
-                    tabs.forEach(tab => tab.classList.remove("active"));
-
-                    // تفعيل العنصر المختار
-                    item.classList.add("active");
-                    const targetId = item.getAttribute("data-target");
-                    const targetTab = document.getElementById(targetId);
-                    if (targetTab) {
-                        targetTab.classList.add("active");
-                    }
-                });
-            });
-        });
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
