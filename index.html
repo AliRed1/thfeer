@@ -3,136 +3,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة كريستل الشاملة - Crystal Suite Pro</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <title>Crystal - المنصة والخدمات الرقمية</title>
+    <!-- استيراد خط عربي أنيق -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <!-- مكتبة أيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0a0c10;
+            --bg-secondary: #131722;
+            --card-bg: #181d2d;
+            --accent-cyan: #00f2fe;
+            --accent-blue: #4facfe;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --border-color: rgba(0, 242, 254, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* شريط التنقل العلوي */
+        header {
+            background: rgba(10, 12, 16, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        .auth-btns {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 242, 254, 0.1);
+        }
+
+        .btn-glow {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: #000;
+            border: none;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.8);
+            transform: translateY(-2px);
+        }
+
+        /* قسم الترحيب الرئيسي (Hero) */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            background: radial-gradient(circle at center, rgba(79, 172, 254, 0.08) 0%, transparent 70%);
+            margin-top: 60px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 35px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* الأقسام والمميزات */
+        .section {
+            padding: 100px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 60px;
+        }
+
+        .section-title span {
+            color: var(--accent-cyan);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px 30px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.15);
+        }
+
+        .card i {
+            font-size: 40px;
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* التذييل (Footer) */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 8%;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        footer p {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>💎 Crystal Suite</h2>
-        <ul>
-            <li class="active" onclick="switchTab('ai')">🤖 مساعد كريستل والذكي (AI)</li>
-            <li onclick="switchTab('debugger')">🛠️ مصحح الأكواد (Debugger)</li>
-            <li onclick="switchTab('encrypt')">🔐 تشفير وفك تشفير الملفات</li>
-            <li onclick="switchTab('obfuscate')">🛡️ تلغيم وحماية الأكواد</li>
-            <li onclick="switchTab('scan')">🔍 فحص الملفات والروابط</li>
-            <li onclick="switchTab('converter')">🔄 محول صيغ الملفات والأدوات</li>
-            <li onclick="switchTab('notes')">☁️ السحابة المؤقتة للملاحظات</li>
-            <li onclick="switchTab('palette')">🎨 استوديو الألوان والتصميم</li>
-            <li onclick="switchTab('apitester')">⚡ فاحص طلبات API</li>
-            <li onclick="switchTab('ideas')">💡 مولد الأفكار والتريندات</li>
-        </ul>
-    </div>
 
-    <div class="main-content">
-        <!-- 1. مساعد الذكاء الاصطناعي -->
-        <div id="ai-tab" class="tab-content">
-            <h2>مساعد كريستل الذكي لتوليد السكربتات</h2>
-            <label>اختر لغة البرمجة المطلوبة:</label>
-            <select id="langSelect">
-                <option value="js">JavaScript</option>
-                <option value="py">Python</option>
-                <option value="lua">Lua (FiveM)</option>
-                <option value="bash">Bash</option>
-                <option value="html">HTML / CSS</option>
-            </select>
-            <textarea id="aiPrompt" placeholder="اطلب أي سكربت، فكرة موقع، أو أداة برمجية..."></textarea>
-            <div class="buttons-group">
-                <button onclick="generateScript()">توليد السكربت بالذكاء الاصطناعي</button>
-                <button onclick="downloadCodeFile()" class="download-btn">تحميل الناتج كملف 💾</button>
+    <!-- شريط التنقل -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-gem"></i> CRYSTAL
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">الرئيسية</a></li>
+                <li><a href="#">الخدمات</a></li>
+                <li><a href="#">المنتجات</a></li>
+                <li><a href="#">الدعم الفني</a></li>
+            </ul>
+        </nav>
+        <div class="auth-btns">
+            <a href="#" class="btn btn-outline">تسجيل الدخول</a>
+            <a href="#" class="btn btn-glow">انضم إلينا</a>
+        </div>
+    </header>
+
+    <!-- قسم الواجهة الرئيسي -->
+    <section class="hero">
+        <h1>مرحباً بك في منصة <span>Crystal</span> المستقبلية</h1>
+        <p>نقدم لك أفضل الحلول الرقمية، الميزات المتقدمة، وأنظمة الحماية والتحكم الفائقة بمستوى أسطوري.</p>
+        <div class="hero-buttons">
+            <a href="#" class="btn btn-glow">استكشف الخدمات الآن</a>
+            <a href="#" class="btn btn-outline"><i class="fa-brands fa-discord"></i> مجتمعنا على ديسكورد</a>
+        </div>
+    </section>
+
+    <!-- قسم المميزات -->
+    <section class="section">
+        <h2 class="section-title">لماذا تختار <span>Crystal</span>؟</h2>
+        <div class="grid-3">
+            <div class="card">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h3>حماية متقدمة وأمان تام</h3>
+                <p>نظام حماية متعدد الطبقات مع تشفير عالي الجودة لضمان أمان كامل لبياناتك وسيرفراتك على مدار الساعة.</p>
             </div>
-            <pre id="aiResult">النتيجة ستظهر هنا...</pre>
-        </div>
-
-        <!-- 2. مصحح الأكواد -->
-        <div id="debugger-tab" class="tab-content" style="display:none;">
-            <h2>مصحح الأكواد والثغرات الآلي (Bug Finder & Fixer)</h2>
-            <textarea id="debugInput" placeholder="الصق الكود الذي يحتوي على خطأ هنا..."></textarea>
-            <button onclick="fixCode()">فحص وإصلاح الأكواد تلقائياً</button>
-            <pre id="debugResult">نتيجة التصحيح ستظهر هنا...</pre>
-        </div>
-
-        <!-- 3. التشفير الحقيقي -->
-        <div id="encrypt-tab" class="tab-content" style="display:none;">
-            <h2>تشفير وفك تشفير الملفات (AES-256)</h2>
-            <input type="text" id="secretKey" placeholder="أدخل مفتاح التشفير (كلمة السر)..." style="width:100%; padding:10px; margin-bottom:15px; background:#030712; color:#fff; border:1px solid #374151; border-radius:6px; box-sizing:border-box;">
-            <div class="drop-zone" id="dropZone">اسحب الملف وأفلته هنا أو اضغط للاختيار</div>
-            <input type="file" id="fileInput" style="display:none;">
-            <div class="buttons-group" style="margin-top:15px;">
-                <button onclick="encryptFile()">تشفير الملف بالكامل</button>
-                <button onclick="decryptFile()">فك تشفير الملف</button>
+            <div class="card">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>سرعة فائقة وأداء استثنائي</h3>
+                <p>بنية تحتية قوية مصممة خصيصاً لتمنحك استجابة سريعة وأداء خالي من التوقفات أو البطيء.</p>
             </div>
-            <a id="downloadLink" style="display:none; margin-top:10px; color:#38bdf8;">تحميل الملف الناتج</a>
-        </div>
-
-        <!-- 4. التلغيم والتمويه -->
-        <div id="obfuscate-tab" class="tab-content" style="display:none;">
-            <h2>تلغيم وحماية الأكواد (Obfuscation Studio)</h2>
-            <textarea id="sourceCode" placeholder="ضع الكود المراد تلغيمه..."></textarea>
-            <div class="buttons-group">
-                <button onclick="obfuscatePayload('base64')">تشفير Base64 متعدد الطبقات</button>
-                <button onclick="obfuscatePayload('hex')">تشفير Hex مع eval</button>
+            <div class="card">
+                <i class="fa-solid fa-headset"></i>
+                <h3>دعم فني متواصل 24/7</h3>
+                <p>فريق دعم فني محترف جاهز لمساعدتك في أي وقت والإجابة على كافة استفساراتك بكل احترافية.</p>
             </div>
-            <textarea id="obfuscatedResult" readonly placeholder="الكود بعد التلغيم..."></textarea>
         </div>
+    </section>
 
-        <!-- 5. الفحص الأمني -->
-        <div id="scan-tab" class="tab-content" style="display:none;">
-            <h2>فحص الملفات والروابط أمنياً</h2>
-            <input type="text" id="urlInput" placeholder="أدخل رابطاً لفحصه (مثال: https://site.com)..." style="width:100%; padding:10px; margin-bottom:15px; background:#030712; color:#fff; border:1px solid #374151; border-radius:6px; box-sizing:border-box;">
-            <button onclick="scanUrl()">فحص الرابط</button>
-            <pre id="scanResult" style="margin-top:15px;">تقرير الفحص سيظهر هنا...</pre>
+    <!-- التذييل -->
+    <footer>
+        <div class="logo" style="justify-content: center; margin-bottom: 15px;">
+            <i class="fa-solid fa-gem"></i> CRYSTAL
         </div>
+        <p>جميع الحقوق محفوظة © 2026 - منصة كريستال الرقمية</p>
+    </footer>
 
-        <!-- 6. محول الأدوات والصيغ -->
-        <div id="converter-tab" class="tab-content" style="display:none;">
-            <h2>محول النصوص والأدوات البرمجية</h2>
-            <textarea id="convertInput" placeholder="أدخل نصاً لتحويله (Base64 / URL Encode / JSON Format)..."></textarea>
-            <div class="buttons-group">
-                <button onclick="convertText('b64encode')">ترميز Base64</button>
-                <button onclick="convertText('b64decode')">فك ترميز Base64</button>
-                <button onclick="convertText('urlencode')">URL Encode</button>
-            </div>
-            <textarea id="convertResult" readonly placeholder="النتيجة المحولة..."></textarea>
-        </div>
-
-        <!-- 7. السحابة المؤقتة للملاحظات -->
-        <div id="notes-tab" class="tab-content" style="display:none;">
-            <h2>الحافظة والسحابة المؤقتة (Cloud Clipboard)</h2>
-            <textarea id="cloudNote" placeholder="اكتب ملاحظتك أو كودك السريع هنا لنقله بين أجهزتك..."></textarea>
-            <button onclick="saveNoteLocally()">حفظ مؤقتاً على المتصفح</button>
-            <pre id="noteResult" style="margin-top:15px;"></pre>
-        </div>
-
-        <!-- 8. استوديو الألوان -->
-        <div id="palette-tab" class="tab-content" style="display:none;">
-            <h2>استوديو الألوان وتدرجاتها (Color Studio)</h2>
-            <p>اختر لوناً لرؤية كوده وتدرجاته البرمجية:</p>
-            <input type="color" id="colorPicker" value="#0284c7" onchange="updateColorInfo()" style="width:100px; height:40px; cursor:pointer; background:none; border:none;">
-            <pre id="colorCodeResult" style="margin-top:15px;">HEX: #0284c7\nRGB: rgb(2, 132, 199)</pre>
-        </div>
-
-        <!-- 9. فاحص API -->
-        <div id="apitester-tab" class="tab-content" style="display:none;">
-            <h2>فاحص ومختبر روابط الـ API الخفيفة</h2>
-            <input type="text" id="apiUrl" placeholder="أدخل رابط API (مثال: https://api.ipify.org?format=json)" style="width:100%; padding:10px; margin-bottom:15px; background:#030712; color:#fff; border:1px solid #374151; border-radius:6px; box-sizing:border-box;">
-            <button onclick="testApiRequest()">إرسال طلب GET</button>
-            <pre id="apiResult" style="margin-top:15px;">استجابة الـ API ستظهر هنا...</pre>
-        </div>
-
-        <!-- 10. مولد الأفكار والتريندات -->
-        <div id="ideas-tab" class="tab-content" style="display:none;">
-            <h2>مولد أفكار المشاريع والسكربتات الذكي</h2>
-            <select id="ideaCategory" style="margin-bottom:15px;">
-                <option value="fivem">سكربتات FiveM متميزة</option>
-                <option value="bot">بوتات ديسكورد تفاعلية</option>
-                <option value="web">مواقع وتطبيقات ويب ذكية</option>
-            </select>
-            <button onclick="generateRandomIdea()">توليد فكرة مشروع إبداعية 💡</button>
-            <pre id="ideaResult" style="margin-top:15px;">اضغط الزر لتوليد فكرة مشروعك القادم...</pre>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
