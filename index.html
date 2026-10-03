@@ -5,67 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة كريستل - Crystal Suite</title>
     <link rel="stylesheet" href="style.css">
+    <!-- مكتبة التشفير القوية CryptoJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body>
     <div class="sidebar">
         <h2>💎 Crystal</h2>
         <ul>
             <li class="active" onclick="switchTab('ai')">مساعد الذكاء الاصطناعي</li>
-            <li onclick="switchTab('encrypt')">تشفير / فك تشفير الملفات</li>
-            <li onclick="switchTab('obfuscate')">تلغيم وتمويه الأكواد</li>
-            <li onclick="switchTab('scan')">فحص الملفات</li>
+            <li onclick="switchTab('encrypt')">تشفير وفك تشفير الملفات</li>
+            <li onclick="switchTab('obfuscate')">تلغيم وحماية الأكواد</li>
+            <li onclick="switchTab('scan')">فحص الملفات والثغرات</li>
         </ul>
     </div>
 
     <div class="main-content">
-        <!-- قسم الذكاء الاصطناعي -->
+        <!-- قسم الذكاء الاصطناعي والمصحح -->
         <div id="ai-tab" class="tab-content">
-            <h2>مساعد كريستل الذكي لتوليد السكربتات</h2>
-            <label>اختر لغة البرمجة:</label>
-            <select id="langSelect">
-                <option value="js">JavaScript</option>
-                <option value="py">Python</option>
-                <option value="lua">Lua (FiveM)</option>
-                <option value="bash">Bash</option>
-                <option value="html">HTML</option>
-            </select>
-            <textarea id="aiPrompt" placeholder="اطلب من كريستل كتابة أي سكربت أو أداة برمجية..."></textarea>
+            <h2>مساعد كريستل الذكي لتوليد ومصحح الأكواد (AI & Debugger)</h2>
+            <div class="form-row">
+                <div>
+                    <label>اختر لغة البرمجة:</label>
+                    <select id="langSelect">
+                        <option value="js">JavaScript</option>
+                        <option value="py">Python</option>
+                        <option value="lua">Lua (FiveM)</option>
+                        <option value="bash">Bash</option>
+                        <option value="html">HTML</option>
+                    </select>
+                </div>
+            </div>
+            <textarea id="aiPrompt" placeholder="اطلب سكربت معين، أو الصق كوداً هنا لفحصه وتصحيح الأخطاء تلقائياً..."></textarea>
             <div class="buttons-group">
                 <button onclick="generateScript()">توليد السكربت بالذكاء الاصطناعي</button>
+                <button onclick="debugCode()" class="debug-btn">تصحيح وفحص الأكواد (Debugger)</button>
                 <button onclick="downloadCodeFile()" class="download-btn">تحميل كملف 💾</button>
             </div>
             <pre id="aiResult">النتيجة ستظهر هنا...</pre>
         </div>
 
-        <!-- قسم التشفير -->
+        <!-- قسم التشفير الحقيقي -->
         <div id="encrypt-tab" class="tab-content" style="display:none;">
-            <h2>تشفير وفك تشفير الملفات والنصوص (AES-256)</h2>
+            <h2>تشفير وفك تشفير الملفات (AES-256 محلّياً)</h2>
+            <input type="text" id="secretKey" placeholder="أدخل مفتاح التشفير (كلمة السر)..." style="width:100%; padding:10px; margin-bottom:15px; background:#030712; color:#fff; border:1px solid #374151; border-radius:6px; box-sizing:border-box;">
+            
             <div class="drop-zone" id="dropZone">اسحب الملف وأفلته هنا أو اضغط للاختيار</div>
             <input type="file" id="fileInput" style="display:none;">
+            
             <div class="buttons-group" style="margin-top:15px;">
-                <button onclick="encryptFile()">تشفير الملف</button>
+                <button onclick="encryptFile()">تشفير الملف بالكامل</button>
                 <button onclick="decryptFile()">فك تشفير الملف</button>
             </div>
-            <a id="downloadLink" style="display:none; margin-top:10px; color:#38bdf8;">تحميل الملف الناتج</a>
+            <a id="downloadLink" style="display:none; margin-top:10px; color:#38bdf8; display:block;">تحميل الملف الناتج</a>
         </div>
 
-        <!-- قسم التلغيم والتمويه -->
+        <!-- قسم التلغيم المتقدم -->
         <div id="obfuscate-tab" class="tab-content" style="display:none;">
-            <h2>تلغيم وحماية الأكواد المتقدمة (Obfuscation)</h2>
-            <textarea id="sourceCode" placeholder="ضع الكود البرمجي هنا لتلغيمه أو حمايته..."></textarea>
+            <h2>أدوات التلغيم والتمويه المتقدمة (Obfuscation)</h2>
+            <textarea id="sourceCode" placeholder="ضع الكود البرمجي هنا لتلغيمه وحمايته..."></textarea>
             <div class="buttons-group">
-                <button onclick="obfuscatePayload('base64')">تشفير Base64 متعدد</button>
-                <button onclick="obfuscatePayload('hex')">تشفير Hex مع eval</button>
+                <button onclick="obfuscatePayload('base64')">تشفير Base64 متعدد الطبقات</button>
+                <button onclick="obfuscatePayload('hex')">تشفير Hex مع دمج eval</button>
             </div>
             <textarea id="obfuscatedResult" readonly placeholder="الكود بعد التلغيم..."></textarea>
         </div>
 
         <!-- قسم الفحص -->
         <div id="scan-tab" class="tab-content" style="display:none;">
-            <h2>فحص الملفات والسكربتات</h2>
-            <input type="file" id="scanInput">
-            <button onclick="scanFile()">فحص شامل للملف</button>
-            <pre id="scanResult">نتيجة الفحص...</pre>
+            <h2>فحص الملفات والسكربتات أمنياً</h2>
+            <div class="drop-zone" id="scanDropZone">اسحب ملف السكربت أو البرنامج هنا للفحص الشامل</div>
+            <input type="file" id="scanInput" style="display:none;">
+            <pre id="scanResult" style="margin-top:15px;">نتيجة الفحص ستظهر هنا...</pre>
         </div>
     </div>
 
