@@ -11,8 +11,8 @@
         <h2>💎 Crystal</h2>
         <ul>
             <li class="active" onclick="switchTab('ai')">مساعد الذكاء الاصطناعي</li>
-            <li onclick="switchTab('encrypt')">تشفير / فك تشفير ملفات</li>
-            <li onclick="switchTab('obfuscate')">تلغيم وفك تلغيم</li>
+            <li onclick="switchTab('encrypt')">تشفير / فك تشفير الملفات</li>
+            <li onclick="switchTab('obfuscate')">تلغيم وتمويه الأكواد</li>
             <li onclick="switchTab('scan')">فحص الملفات</li>
         </ul>
     </div>
@@ -21,27 +21,42 @@
         <!-- قسم الذكاء الاصطناعي -->
         <div id="ai-tab" class="tab-content">
             <h2>مساعد كريستل الذكي لتوليد السكربتات</h2>
+            <label>اختر لغة البرمجة:</label>
+            <select id="langSelect">
+                <option value="js">JavaScript</option>
+                <option value="py">Python</option>
+                <option value="lua">Lua (FiveM)</option>
+                <option value="bash">Bash</option>
+                <option value="html">HTML</option>
+            </select>
             <textarea id="aiPrompt" placeholder="اطلب من كريستل كتابة أي سكربت أو أداة برمجية..."></textarea>
-            <button onclick="generateScript()">توليد السكربت بالذكاء الاصطناعي</button>
+            <div class="buttons-group">
+                <button onclick="generateScript()">توليد السكربت بالذكاء الاصطناعي</button>
+                <button onclick="downloadCodeFile()" class="download-btn">تحميل كملف 💾</button>
+            </div>
             <pre id="aiResult">النتيجة ستظهر هنا...</pre>
         </div>
 
         <!-- قسم التشفير -->
         <div id="encrypt-tab" class="tab-content" style="display:none;">
-            <h2>تشفير وفك تشفير الملفات والنصوص</h2>
-            <input type="file" id="fileInput">
-            <div class="buttons-group">
+            <h2>تشفير وفك تشفير الملفات والنصوص (AES-256)</h2>
+            <div class="drop-zone" id="dropZone">اسحب الملف وأفلته هنا أو اضغط للاختيار</div>
+            <input type="file" id="fileInput" style="display:none;">
+            <div class="buttons-group" style="margin-top:15px;">
                 <button onclick="encryptFile()">تشفير الملف</button>
                 <button onclick="decryptFile()">فك تشفير الملف</button>
             </div>
-            <a id="downloadLink" style="display:none; margin-top:10px; color:#58a6ff;">تحميل الملف الناتج</a>
+            <a id="downloadLink" style="display:none; margin-top:10px; color:#38bdf8;">تحميل الملف الناتج</a>
         </div>
 
         <!-- قسم التلغيم والتمويه -->
         <div id="obfuscate-tab" class="tab-content" style="display:none;">
-            <h2>تلغيم وحماية السكربتات (Obfuscation)</h2>
+            <h2>تلغيم وحماية الأكواد المتقدمة (Obfuscation)</h2>
             <textarea id="sourceCode" placeholder="ضع الكود البرمجي هنا لتلغيمه أو حمايته..."></textarea>
-            <button onclick="obfuscatePayload()">تنفيذ التلغيم / التمويه</button>
+            <div class="buttons-group">
+                <button onclick="obfuscatePayload('base64')">تشفير Base64 متعدد</button>
+                <button onclick="obfuscatePayload('hex')">تشفير Hex مع eval</button>
+            </div>
             <textarea id="obfuscatedResult" readonly placeholder="الكود بعد التلغيم..."></textarea>
         </div>
 
